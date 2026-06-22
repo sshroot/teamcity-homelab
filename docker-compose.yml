@@ -30,7 +30,7 @@ services:
       - POSTGRES_PASSWORD=${PG_PASSWORD}
       - PG_DATA=/var/lib/postgresql/data
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/${PG_VERSION}/docker
     networks:
       - teamcity_net
     healthcheck:
