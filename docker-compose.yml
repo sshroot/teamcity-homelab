@@ -52,6 +52,10 @@ services:
     container_name: teamcity-server
     restart: unless-stopped
     privileged: false
+    environment:
+      - TEAMCITY_DB_URL=jdbc:postgresql://db:5432/${PG_DB}
+      - TEAMCITY_DB_USER=${PG_USER}
+      - TEAMCITY_DB_PASSWORD=${PG_PASSWORD}
     volumes:
       - teamcity_data:/data/teamcity_server/datadir
       - teamcity_logs:/opt/teamcity/logs
