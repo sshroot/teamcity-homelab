@@ -11,22 +11,6 @@ volumes:
   teamcity_agent_system_1:
   teamcity_agent_temp_1:
   teamcity_agent_conf_1:
-  teamcity_agent_tools_2:
-  teamcity_agent_work_2:
-  teamcity_agent_logs_2:
-  teamcity_agent_plugins_2:
-  teamcity_agent_docker_2:
-  teamcity_agent_system_2:
-  teamcity_agent_temp_2:
-  teamcity_agent_conf_2:  
-  teamcity_agent_tools_3:
-  teamcity_agent_work_3:
-  teamcity_agent_logs_3:
-  teamcity_agent_plugins_3:
-  teamcity_agent_docker_3:
-  teamcity_agent_system_3:
-  teamcity_agent_temp_3:
-  teamcity_agent_conf_3:
 
 networks:
   teamcity_net:
@@ -122,61 +106,3 @@ services:
       teamcity-server:
         condition: service_healthy
 
-  teamcity-agent-2:
-    image: jetbrains/teamcity-agent:${TEAMCITY_VERSION}-linux-sudo
-    hostname: teamcity-agent-2
-    container_name: teamcity-agent-2
-    restart: unless-stopped
-    privileged: true
-    volumes:
-      - teamcity_agent_tools_2:/opt/buildagent/tools
-      - teamcity_agent_work_2:/opt/buildagent/work
-      - teamcity_agent_docker_2:/var/lib/docker:/var/lib/docker
-      - teamcity_agent_logs_2:/opt/buildagent/logs
-      - teamcity_agent_plugins_2:/opt/buildagent/plugins
-      - teamcity_agent_system_2:/opt/buildagent/system
-      - teamcity_agent_temp_2:/opt/buildagent/temp
-      - teamcity_agent_conf_2:/data/teamcity_agent/conf
-    environment:
-      - SERVER_URL=teamcity-server:8111
-      - DOCKER_IN_DOCKER=start
-    networks:
-      - teamcity_net
-    deploy:
-      resources:
-        limits:
-          cpus: ${AGENT_CPU}
-          memory: ${AGENT_RAM}
-    depends_on:
-      teamcity-server:
-        condition: service_healthy
-    
-  teamcity-agent-3:
-    image: jetbrains/teamcity-agent:${TEAMCITY_VERSION}-linux-sudo
-    hostname: teamcity-agent-3
-    container_name: teamcity-agent-3
-    restart: unless-stopped
-    privileged: true
-    volumes:
-      - teamcity_agent_tools_3:/opt/buildagent/tools
-      - teamcity_agent_work_3:/opt/buildagent/work
-      - teamcity_agent_docker_3:/var/lib/docker:/var/lib/docker
-      - teamcity_agent_logs_3:/opt/buildagent/logs
-      - teamcity_agent_plugins_3:/opt/buildagent/plugins
-      - teamcity_agent_system_3:/opt/buildagent/system
-      - teamcity_agent_temp_3:/opt/buildagent/temp
-      - teamcity_agent_conf_3:/data/teamcity_agent/conf
-    environment:
-      - SERVER_URL=teamcity-server:8111
-      - DOCKER_IN_DOCKER=start
-    networks:
-      - teamcity_net
-    shm_size: ${AGENT_SHM}
-    deploy:
-      resources:
-        limits:
-          cpus: ${AGENT_CPU}
-          memory: ${AGENT_RAM}
-    depends_on:
-      teamcity-server:
-        condition: service_healthy
